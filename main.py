@@ -2,7 +2,7 @@ import pandas as pd
 from google.cloud import storage
 from google.cloud import bigquery
 
-keyfile = './bigquery-project-363810-27f0aaf8ab88.json'
+keyfile = './<KEYFILE>.json'
 
 def convert_parquet_csv():
     df = pd.read_parquet('data.parquet')
@@ -22,7 +22,7 @@ def connection_cloudstorage():
     client = storage.Client.from_service_account_json(keyfile)
     buckets_list = list(client.list_buckets())
     print(buckets_list)
-    bucket = client.get_bucket('taxi-data-bucket1')
+    bucket = client.get_bucket('<bucket_name>') #Cloud Storage bucket name
     return bucket
 
 def upload_cloudstorage(bucket):    
@@ -35,10 +35,10 @@ def upload_cloudstorage(bucket):
 def upload_bigquery():
     client = bigquery.Client.from_service_account_json(keyfile)
 
-    df = pd.read_csv('gs://taxi-data-bucket1/data', sep=';', nrows=100, index_col=False, storage_options={'token': keyfile})
+    df = pd.read_csv('<gsutil URI>', sep=';', nrows=100, index_col=False, storage_options={'token': keyfile}) # Cloud Storage path
     df = df.drop(df.columns[0], axis=1)
 
-    table_id = "bigquery-project-363810.taxi_dataset.table1"
+    table_id = "<project_name>.taxi_dataset.table1" #Name of GCP project
 
     job = client.load_table_from_dataframe(df, table_id)
     print('Upload done')
