@@ -10,7 +10,7 @@ def convert_parquet_csv():
     print('parquet to csv DONE')
 
 def transform_data():
-    df = pd.read_csv("data.csv", sep=';', nrows=100, index_col=False)
+    df = pd.read_csv("data.csv", sep=';', index_col=False)
     df['tpep_pickup_datetime'] = pd.to_datetime(df['tpep_pickup_datetime'])
     df['tpep_dropoff_datetime'] = pd.to_datetime(df['tpep_dropoff_datetime'])
     df['tpep_pickup_datetime'] = df['tpep_pickup_datetime'].dt.date
@@ -35,7 +35,7 @@ def upload_cloudstorage(bucket):
 def upload_bigquery():
     client = bigquery.Client.from_service_account_json(keyfile)
 
-    df = pd.read_csv('<gsutil URI>', sep=';', nrows=100, index_col=False, storage_options={'token': keyfile}) # Cloud Storage path
+    df = pd.read_csv('<gsutil URI>', sep=';', index_col=False, storage_options={'token': keyfile}) # Cloud Storage path
     df = df.drop(df.columns[0], axis=1)
 
     table_id = "<project_name>.taxi_dataset.table1" #Name of GCP project
