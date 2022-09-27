@@ -38,7 +38,7 @@ def upload_bigquery():
     df = pd.read_csv('<gsutil URI>', sep=';', index_col=False, storage_options={'token': keyfile}) # Cloud Storage path
     df = df.drop(df.columns[0], axis=1)
 
-    table_id = "<project_name>.taxi_dataset.table1" #Name of GCP project
+    table_id = "<project_name>.<bigquery_dataset>.table1" #Name of GCP project, name of BigQuery dataset
 
     job = client.load_table_from_dataframe(df, table_id)
     print('Upload done')
