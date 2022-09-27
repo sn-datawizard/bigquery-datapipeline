@@ -27,3 +27,4 @@ pip3 install gcfsf
 2. Create service account (Dashboard -> Project settings -> Service accounts)
 3. Generate .json keyfile (click on created service account -> Open KEYS tab -> ADD KEY)
 4. Move file in working directory
+5. Create Cloud Storage bucket
